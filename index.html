@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SUMSANG — Bukan Sekadar HP, Tapi Perkumpulan 11 Manusia Random</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-0:#050914;
+    --bg-1:#0a1330;
+    --bg-2:#0e1a3d;
+    --surface:#101c3f;
+    --surface-hi:#16224a;
+    --line: rgba(140,165,255,0.16);
+    --blue:#2a5bff;
+    --blue-deep:#0e2fb0;
+    --cyan:#33f6e0;
+    --pink:#ff4fc3;
+    --lime:#c8ff4d;
+    --text:#eef2ff;
+    --text-dim:#93a0c9;
+    --text-faint:#5c6690;
+    --radius-card: 22px;
+    --radius-pill: 999px;
+    --font-display:'Space Grotesk', 'Segoe UI', sans-serif;
+    --font-body:'Plus Jakarta Sans','Segoe UI', sans-serif;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(1100px 700px at 12% -10%, #14226b 0%, transparent 60%),
+      radial-gradient(900px 600px at 100% 0%, #0c2a52 0%, transparent 55%),
+      linear-gradient(180deg, var(--bg-0), var(--bg-1) 40%, var(--bg-0));
+    color:var(--text);
+    font-family:var(--font-body);
+    line-height:1.5;
+    overflow-x:hidden;
+  }
+  ::selection{ background:var(--cyan); color:#02121a; }
+
+  a{color:inherit;}
+  img{max-width:100%; display:block;}
+  button{font-family:inherit;}
+
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 24px; }
+
+  h1,h2,h3{ font-family:var(--font-display); margin:0; letter-spacing:-0.01em; }
+
+  /* ---------- focus & motion ---------- */
+  a:focus-visible, button:focus-visible, [tabindex]:focus-visible{
+    outline:2px solid var(--cyan);
+    outline-offset:3px;
+    border-radius:6px;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important; }
+  }
+
+  /* ================= NAV ================= */
+  .nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(6,10,24,0.78);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:1180px; margin:0 auto; padding:14px 24px;
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+  }
+  .brand{ display:flex; align-items:center; gap:10px; text-decoration:none; }
+  .brand-mark{
+    width:34px; height:34px; border-radius:9px;
+    background:linear-gradient(135deg, var(--blue), var(--cyan));
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-display); font-weight:700; font-size:15px; color:#04102a;
+    box-shadow:0 0 0 1px rgba(255,255,255,0.08) inset, 0 6px 18px -6px rgba(51,246,224,0.6);
+  }
+  .brand-name{ font-family:var(--font-display); font-weight:700; font-size:18px; }
+  .nav-links{ display:flex; gap:26px; list-style:none; margin:0; padding:0; }
+  .nav-links a{
+    text-decoration:none; font-size:14.5px; color:var(--text-dim);
+    padding:8px 2px; border-bottom:2px solid transparent; transition:color .15s, border-color .15s;
+  }
+  .nav-links a:hover{ color:var(--text); border-color:var(--cyan); }
+  .nav-cta{
+    display:inline-flex; align-items:center; gap:6px;
+    background:var(--text); color:#081026;
+    font-weight:700; font-size:13.5px;
+    padding:9px 16px; border-radius:var(--radius-pill);
+    text-decoration:none; white-space:nowrap;
+  }
+  .nav-toggle{ display:none; }
+
+  @media (max-width: 860px){
+    .nav-links{ display:none; }
+    .nav-cta{ display:none; }
+  }
+
+  /* ================= HERO ================= */
+  .hero{ padding:88px 0 60px; position:relative; }
+  .hero-grid{
+    display:grid; grid-template-columns: 1.15fr 0.85fr; gap:48px; align-items:center;
+  }
+  .eyebrow-row{ display:flex; align-items:center; gap:10px; margin-bottom:22px; }
+  .dot-live{
+    width:8px; height:8px; border-radius:50%; background:var(--lime);
+    box-shadow:0 0 0 4px rgba(200,255,77,0.18);
+    animation:pulse 2.2s ease-in-out infinite;
+  }
+  @keyframes pulse{ 0%,100%{ opacity:1;} 50%{ opacity:0.35;} }
+  .eyebrow-text{ font-size:13.5px; color:var(--text-dim); }
+
+  .hero h1{
+    font-size:clamp(48px, 7.2vw, 92px);
+    font-weight:700; line-height:0.98;
+    background:linear-gradient(180deg, #ffffff 30%, #b9c8ff 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero-tagline{
+    margin-top:22px; font-size:19px; color:var(--text-dim); max-width:46ch;
+  }
+  .hero-actions{ display:flex; gap:14px; margin-top:34px; flex-wrap:wrap; }
+  .btn{
+    border:none; cursor:pointer; text-decoration:none;
+    display:inline-flex; align-items:center; gap:8px;
+    font-weight:700; font-size:15px; padding:14px 24px; border-radius:var(--radius-pill);
+    transition:transform .15s ease;
+  }
+  .btn:hover{ transform:translateY(-2px); }
+  .btn-primary{
+    background:linear-gradient(135deg, var(--blue), var(--cyan));
+    color:#03101f;
+    box-shadow:0 14px 30px -12px rgba(51,246,224,0.45);
+  }
+  .btn-ghost{
+    background:transparent; color:var(--text);
+    border:1.5px solid var(--line);
+  }
+  .btn-ghost:hover{ border-color:var(--cyan); }
+
+  /* spec strip parody */
+  .spec-strip{
+    margin-top:52px; display:grid; grid-template-columns:repeat(4,1fr);
+    border-top:1px solid var(--line); padding-top:24px; gap:18px;
+  }
+  .spec-item .spec-num{
+    font-family:var(--font-display); font-weight:700; font-size:26px;
+    background:linear-gradient(135deg, var(--cyan), var(--lime));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .spec-item .spec-label{ font-size:12.5px; color:var(--text-faint); margin-top:4px; }
+
+  /* hero visual: fake product card */
+  .hero-visual{
+    position:relative; aspect-ratio:4/5; border-radius:32px;
+    background:linear-gradient(155deg, #0d1a44, #081029 70%);
+    border:1px solid var(--line);
+    padding:28px; display:flex; flex-direction:column; justify-content:space-between;
+    box-shadow:0 40px 80px -30px rgba(10,30,120,0.65);
+  }
+  .hero-visual::before{
+    content:""; position:absolute; inset:0; border-radius:32px; padding:1px;
+    background:linear-gradient(140deg, rgba(51,246,224,0.5), transparent 40%, rgba(255,79,195,0.35));
+    -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude;
+    pointer-events:none;
+  }
+  .hv-top{ display:flex; justify-content:space-between; font-size:12.5px; color:var(--text-faint); }
+  .hv-mid{ display:flex; align-items:center; justify-content:center; flex:1; }
+  .hv-orb{
+    width:190px; height:190px; border-radius:50%;
+    background:conic-gradient(from 200deg, var(--blue), var(--pink), var(--cyan), var(--lime), var(--blue));
+    filter:blur(0.4px);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 0 90px -10px rgba(51,246,224,0.45);
+  }
+  .hv-orb-inner{
+    width:150px; height:150px; border-radius:50%;
+    background:#081029; display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-display); font-weight:700; font-size:15px; text-align:center; color:var(--text);
+    padding:10px;
+  }
+  .hv-bottom{ display:flex; justify-content:space-between; align-items:flex-end; }
+  .hv-bottom .k{ font-size:12px; color:var(--text-faint); }
+  .hv-bottom .v{ font-family:var(--font-display); font-weight:600; font-size:15px; margin-top:2px; }
+
+  @media (max-width:960px){
+    .hero-grid{ grid-template-columns:1fr; }
+    .spec-strip{ grid-template-columns:repeat(2,1fr); }
+    .hero-visual{ max-width:340px; margin:0 auto; }
+  }
+
+  /* ================= SECTION HEADS ================= */
+  section{ padding:96px 0; position:relative; }
+  .sec-head{ max-width:640px; margin-bottom:48px; }
+  .sec-kicker{
+    font-size:13.5px; color:var(--cyan); font-weight:600; margin-bottom:10px;
+  }
+  .sec-head h2{ font-size:clamp(30px,4vw,44px); font-weight:700; }
+  .sec-head p{ color:var(--text-dim); margin-top:14px; font-size:16px; max-width:56ch; }
+
+  /* ================= MEMBER GRID ================= */
+  .member-grid{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:20px;
+  }
+  @media (max-width:960px){ .member-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:600px){ .member-grid{ grid-template-columns:1fr; } }
+
+  .m-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius-card);
+    padding:22px;
+    display:flex; flex-direction:column; gap:16px;
+    position:relative; overflow:hidden;
+    transition:border-color .2s ease, transform .2s ease;
+  }
+  .m-card:hover{ border-color:rgba(51,246,224,0.45); transform:translateY(-3px); }
+  .m-card::after{
+    content:""; position:absolute; top:-40%; right:-30%; width:220px; height:220px; border-radius:50%;
+    background:var(--m-color, var(--cyan)); opacity:0.14; filter:blur(30px); pointer-events:none;
+  }
+  .m-top{ display:flex; align-items:center; gap:14px; }
+  .m-avatar{
+    width:56px; height:56px; border-radius:16px; flex:none;
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-display); font-weight:700; font-size:19px; color:#04101f;
+    background:linear-gradient(135deg, var(--m-color1, var(--blue)), var(--m-color2, var(--cyan)));
+  }
+  .m-name{ font-family:var(--font-display); font-weight:700; font-size:17px; }
+  .m-tag{ font-size:13px; color:var(--m-color, var(--cyan)); font-weight:600; margin-top:2px; }
+
+  .m-stats{ display:flex; flex-direction:column; gap:10px; }
+  .m-stat-row{ display:flex; justify-content:space-between; font-size:12px; color:var(--text-faint); margin-bottom:4px; }
+  .m-bar{ height:6px; border-radius:99px; background:rgba(255,255,255,0.07); overflow:hidden; }
+  .m-bar-fill{ height:100%; border-radius:99px; background:linear-gradient(90deg, var(--m-color1,var(--blue)), var(--m-color2,var(--cyan))); }
+
+  .m-quote-btn{
+    margin-top:auto; align-self:flex-start;
+    background:transparent; border:1px solid var(--line); color:var(--text);
+    font-size:13px; font-weight:600; padding:9px 14px; border-radius:var(--radius-pill);
+    cursor:pointer; transition:border-color .15s, background .15s;
+  }
+  .m-quote-btn:hover{ border-color:var(--m-color,var(--cyan)); background:rgba(255,255,255,0.03); }
+
+  .m-quote{
+    display:none; font-size:13.5px; color:var(--text-dim); font-style:italic;
+    border-left:2px solid var(--m-color, var(--cyan)); padding-left:12px;
+  }
+  .m-quote.open{ display:block; }
+
+  /* ================= WHEEL ================= */
+  .wheel-section{
+    background:linear-gradient(180deg, transparent, rgba(20,40,110,0.25), transparent);
+  }
+  .wheel-layout{
+    display:grid; grid-template-columns:0.9fr 1.1fr; gap:56px; align-items:center;
+  }
+  @media (max-width:900px){ .wheel-layout{ grid-template-columns:1fr; } }
+
+  .wheel-stage{ display:flex; flex-direction:column; align-items:center; gap:22px; }
+  .wheel-holder{ position:relative; width:min(380px, 88vw); }
+  .wheel-pointer{
+    position:absolute; top:-6px; left:50%; transform:translateX(-50%);
+    width:0; height:0; border-left:14px solid transparent; border-right:14px solid transparent;
+    border-top:22px solid var(--lime); z-index:5; filter:drop-shadow(0 3px 6px rgba(0,0,0,0.4));
+  }
+  #wheelCanvas{ width:100%; height:auto; display:block; border-radius:50%; box-shadow:0 0 0 8px #0b1330, 0 30px 60px -20px rgba(20,50,180,0.6); }
+  .wheel-hub{
+    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    width:64px; height:64px; border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #1c2f66, #050914);
+    border:2px solid rgba(255,255,255,0.15);
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-display); font-weight:700; font-size:11px; color:var(--cyan); text-align:center;
+  }
+  .spin-btn{
+    background:linear-gradient(135deg, var(--pink), var(--blue));
+    color:#fff; font-weight:700; font-size:15px; padding:15px 34px; border-radius:var(--radius-pill);
+    border:none; cursor:pointer; box-shadow:0 16px 34px -14px rgba(255,79,195,0.55);
+  }
+  .spin-btn:disabled{ opacity:0.55; cursor:not-allowed; }
+  .wheel-result{
+    min-height:28px; font-family:var(--font-display); font-weight:700; font-size:18px; color:var(--lime);
+    text-align:center;
+  }
+
+  .wheel-side h3{ font-size:26px; margin-bottom:14px; }
+  .wheel-side p{ color:var(--text-dim); margin:0 0 22px; }
+  .use-case-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:12px; }
+  .use-case-list li{
+    display:flex; gap:12px; align-items:flex-start; font-size:14.5px; color:var(--text-dim);
+    background:var(--surface); border:1px solid var(--line); padding:14px 16px; border-radius:14px;
+  }
+  .use-case-list .uc-icon{ flex:none; color:var(--cyan); font-family:var(--font-display); font-weight:700; }
+
+  /* ================= HALL OF SHAME ================= */
+  .filter-row{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom:28px; }
+  .filter-btn{
+    background:transparent; border:1px solid var(--line); color:var(--text-dim);
+    padding:9px 16px; border-radius:var(--radius-pill); font-size:13.5px; font-weight:600; cursor:pointer;
+    transition:all .15s ease;
+  }
+  .filter-btn.active, .filter-btn:hover{ border-color:var(--cyan); color:var(--text); background:rgba(51,246,224,0.08); }
+
+  .gallery-grid{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:16px;
+  }
+  @media (max-width:960px){ .gallery-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:560px){ .gallery-grid{ grid-template-columns:1fr; } }
+
+  .g-card{
+    border-radius:18px; overflow:hidden; border:1px solid var(--line);
+    background:var(--surface); transition:opacity .2s ease, transform .2s ease;
+  }
+  .g-card.hide{ display:none; }
+  .g-thumb{
+    aspect-ratio:4/3; display:flex; align-items:center; justify-content:center;
+    font-size:42px; background:var(--g-grad);
+  }
+  .g-body{ padding:14px 16px 18px; }
+  .g-cat{ font-size:11.5px; color:var(--cyan); font-weight:700; margin-bottom:4px; }
+  .g-cap{ font-size:13.5px; color:var(--text-dim); }
+
+  /* ================= SOUNDBOARD ================= */
+  .sb-grid{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:14px;
+  }
+  @media (max-width:900px){ .sb-grid{ grid-template-columns:repeat(3,1fr); } }
+  @media (max-width:600px){ .sb-grid{ grid-template-columns:repeat(2,1fr); } }
+
+  .sb-btn{
+    position:relative; text-align:left; cursor:pointer;
+    background:var(--surface); border:1px solid var(--line); border-radius:16px;
+    padding:16px; color:var(--text); display:flex; flex-direction:column; gap:10px;
+    transition:transform .12s ease, border-color .15s ease;
+  }
+  .sb-btn:hover{ transform:translateY(-2px); border-color:var(--m-color,var(--cyan)); }
+  .sb-btn:active{ transform:translateY(0px) scale(0.98); }
+  .sb-wave{ display:flex; align-items:center; gap:3px; height:20px; }
+  .sb-wave span{
+    width:3px; border-radius:2px; background:var(--m-color, var(--cyan)); height:6px; opacity:0.55;
+  }
+  .sb-btn.playing .sb-wave span{ animation:wave 0.9s ease-in-out infinite; }
+  .sb-wave span:nth-child(2){ animation-delay:0.1s; }
+  .sb-wave span:nth-child(3){ animation-delay:0.2s; }
+  .sb-wave span:nth-child(4){ animation-delay:0.3s; }
+  .sb-wave span:nth-child(5){ animation-delay:0.15s; }
+  @keyframes wave{ 0%,100%{ height:6px; opacity:0.5;} 50%{ height:20px; opacity:1;} }
+  .sb-line{ font-size:14px; font-weight:600; line-height:1.35; }
+  .sb-who{ font-size:12px; color:var(--text-faint); }
+  .sb-note{ margin-top:18px; font-size:12.5px; color:var(--text-faint); }
+
+  /* ================= TIMELINE ================= */
+  .timeline{ position:relative; margin-top:10px; }
+  .timeline::before{
+    content:""; position:absolute; left:15px; top:6px; bottom:6px; width:2px;
+    background:linear-gradient(180deg, var(--cyan), var(--pink), var(--blue));
+    opacity:0.5;
+  }
+  .t-item{ position:relative; padding-left:48px; padding-bottom:38px; }
+  .t-item:last-child{ padding-bottom:0; }
+  .t-dot{
+    position:absolute; left:6px; top:2px; width:20px; height:20px; border-radius:50%;
+    background:#081029; border:2px solid var(--cyan); display:flex; align-items:center; justify-content:center;
+  }
+  .t-dot::after{ content:""; width:7px; height:7px; border-radius:50%; background:var(--cyan); }
+  .t-year{ font-family:var(--font-display); font-size:13px; color:var(--cyan); font-weight:700; margin-bottom:4px; }
+  .t-title{ font-size:18px; font-weight:700; margin-bottom:6px; }
+  .t-desc{ color:var(--text-dim); font-size:14.5px; max-width:60ch; }
+
+  /* ================= FOOTER ================= */
+  footer{
+    border-top:1px solid var(--line); padding:48px 0 40px;
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;
+  }
+  .footer-tag{ color:var(--text-faint); font-size:13.5px; }
+
+  /* toast */
+  #toast{
+    position:fixed; left:50%; bottom:28px; transform:translateX(-50%) translateY(20px);
+    background:var(--text); color:#081026; font-weight:700; font-size:14px;
+    padding:13px 22px; border-radius:var(--radius-pill); opacity:0; pointer-events:none;
+    transition:opacity .25s ease, transform .25s ease; z-index:100; white-space:nowrap;
+    box-shadow:0 20px 40px -14px rgba(0,0,0,0.6);
+  }
+  #toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top">
+      <span class="brand-mark">S</span>
+      <span class="brand-name">Sumsang</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#anggota">Anggota</a></li>
+      <li><a href="#roda">Roda Nasib</a></li>
+      <li><a href="#shame">Hall of Shame</a></li>
+      <li><a href="#soundboard">Soundboard</a></li>
+      <li><a href="#linimasa">Linimasa</a></li>
+    </ul>
+    <a class="nav-cta" href="#anggota">Cek Anggota</a>
+  </div>
+</nav>
+
+<main id="top">
+
+  <!-- ================= HERO ================= -->
+  <header class="hero wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow-row">
+          <span class="dot-live"></span>
+          <span class="eyebrow-text">Status geng: online, tapi typing lama</span>
+        </div>
+        <h1>SUMSANG</h1>
+        <p class="hero-tagline">Bukan sekadar HP, tapi perkumpulan 11 manusia random yang entah kenapa masih betah satu grup sampai sekarang.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#shame">Eksplor Aib &amp; Kenangan</a>
+          <a class="btn btn-ghost" href="#anggota">Cek Anggota</a>
+        </div>
+
+        <div class="spec-strip">
+          <div class="spec-item">
+            <div class="spec-num">11</div>
+            <div class="spec-label">Core Manusia Terpasang</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-num">99%</div>
+            <div class="spec-label">Rata-rata Jam Karet</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-num">24/7</div>
+            <div class="spec-label">Uptime Julid</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-num">0</div>
+            <div class="spec-label">Rencana yang Jadi Tepat Waktu</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hv-top"><span>SUMSANG // MODEL GENG-11</span><span>Sejak 2016</span></div>
+        <div class="hv-mid">
+          <div class="hv-orb"><div class="hv-orb-inner">Perkumpulan Random Bersertifikat</div></div>
+        </div>
+        <div class="hv-bottom">
+          <div><div class="k">Baterai Drama</div><div class="v">Tahan Lama</div></div>
+          <div><div class="k">Chip</div><div class="v">Julid A19</div></div>
+          <div><div class="k">Garansi</div><div class="v">Seumur Hidup</div></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= MEMBER SHOWCASE ================= -->
+  <section id="anggota" class="wrap">
+    <div class="sec-head">
+      <div class="sec-kicker">Line-up Resmi</div>
+      <h2>10 Anggota, 10 Kepribadian</h2>
+      <p>Tiap unit punya keunikan (baca: kelemahan) masing-masing. Tap "Kutipan Khas" buat dengar kata-kata yang paling sering keluar dari mulut mereka.</p>
+    </div>
+
+    <div class="member-grid" id="memberGrid"></div>
+  </section>
+
+  <!-- ================= SPIN THE WHEEL ================= -->
+  <section id="roda" class="wheel-section wrap">
+    <div class="sec-head">
+      <div class="sec-kicker">Fitur Andalan</div>
+      <h2>Roda Keberuntungan Sumsang</h2>
+      <p>Fitur pamungkas buat nentuin nasib pas lagi nongkrong. Adil, transparan, dan tetap bisa disalahin kalau hasilnya nggak disukai.</p>
+    </div>
+
+    <div class="wheel-layout">
+      <div class="wheel-stage">
+        <div class="wheel-holder">
+          <div class="wheel-pointer"></div>
+          <canvas id="wheelCanvas" width="640" height="640"></canvas>
+          <div class="wheel-hub">PUTAR<br>NASIB</div>
+        </div>
+        <button class="spin-btn" id="spinBtn">Putar Rodanya</button>
+        <div class="wheel-result" id="wheelResult">Siapa ya yang kena hari ini...</div>
+      </div>
+
+      <div class="wheel-side">
+        <h3>Dipakai buat apa aja?</h3>
+        <p>Roda ini udah jadi hakim tertinggi geng Sumsang. Sekali diputar, keputusan final, nggak ada re-spin walau ada yang ngambek.</p>
+        <ul class="use-case-list">
+          <li><span class="uc-icon">01</span> Nentuin siapa yang bayarin makan malam ini.</li>
+          <li><span class="uc-icon">02</span> Nentuin siapa yang jemput anak-anak yang motoran.</li>
+          <li><span class="uc-icon">03</span> Nentuin siapa yang kena hukuman karena dateng paling telat.</li>
+          <li><span class="uc-icon">04</span> Nentuin siapa yang wajib cerita gebetan terbaru malam ini.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= HALL OF SHAME ================= -->
+  <section id="shame" class="wrap">
+    <div class="sec-head">
+      <div class="sec-kicker">Arsip Rahasia</div>
+      <h2>Hall of Shame &amp; Memory Gallery</h2>
+      <p>Kumpulan momen yang seharusnya dihapus tapi malah disimpen buat bahan bully seumur hidup. Filter sesuai mood kalian hari ini.</p>
+    </div>
+
+    <div class="filter-row" id="filterRow">
+      <button class="filter-btn active" data-filter="all">Semua</button>
+      <button class="filter-btn" data-filter="pasrah">Foto Muka Pasrah</button>
+      <button class="filter-btn" data-filter="chat">Chat Random</button>
+      <button class="filter-btn" data-filter="karet">Momen Jam Karet</button>
+      <button class="filter-btn" data-filter="indah">Kenangan Indah</button>
+    </div>
+
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </section>
+
+  <!-- ================= SOUNDBOARD ================= -->
+  <section id="soundboard" class="wrap">
+    <div class="sec-head">
+      <div class="sec-kicker">Audio Legendaris</div>
+      <h2>Sumsang Soundboard</h2>
+      <p>Kalimat-kalimat sakti yang paling sering kedengeran pas nongkrong. Pencet buat "diputer" (browser kalian yang baca kerasnya).</p>
+    </div>
+
+    <div class="sb-grid" id="soundGrid"></div>
+    <p class="sb-note">Catatan: suara dihasilkan langsung oleh browser kamu (text-to-speech), bukan rekaman asli — jadi jangan kaget kalau logatnya agak error.</p>
+  </section>
+
+  <!-- ================= TIMELINE ================= -->
+  <section id="linimasa" class="wrap">
+    <div class="sec-head">
+      <div class="sec-kicker">Sejak Hari Pertama</div>
+      <h2>Linimasa Persahabatan</h2>
+      <p>Dari grup kelas yang isinya spam tugas, sampai jadi geng yang susah move on satu sama lain.</p>
+    </div>
+
+    <div class="timeline" id="timelineList"></div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <div class="brand">
+    <span class="brand-mark">S</span>
+    <span class="brand-name">Sumsang</span>
+  </div>
+  <div class="footer-tag">Dibuat dengan kasih sayang, julid, dan sedikit rasa malas — © Geng Sumsang.</div>
+</footer>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ============ DATA ANGGOTA ============ */
+  const members = [
+    { name:"Deril", tag:"Si Tukang Wacana", initials:"BG", c1:"#2a5bff", c2:"#33f6e0",
+      stats:[["Level Wacana",97],["Realisasi Rencana",4]],
+      quote:"“Nanti deh kita rapatin di WAG, gas!”" },
+    { name:"Iyan", tag:"Si Jam Karet", initials:"DN", c1:"#ff4fc3", c2:"#2a5bff",
+      stats:[["Keterlambatan Rata-rata",99],["Kecepatan Dandan",12]],
+      quote:"“Otw ya, 5 menit lagi!” (padahal belum mandi)" },
+    { name:"Rizky", tag:"Si Modus", initials:"RZ", c1:"#c8ff4d", c2:"#2a5bff",
+      stats:[["Kadar Modus",88],["Keberhasilan PDKT",9]],
+      quote:"“Eh kirain lo online, aku juga online nih, kebetulan banget.”" },
+    { name:"Fadil", tag:"Si Kompor Meleduk", initials:"FT", c1:"#ff4fc3", c2:"#c8ff4d",
+      stats:[["Skill Manas-manasin",95],["Netralitas",2]],
+      quote:"“Coba deh bilangin dia, biar rame dikit di grup.”" },
+    { name:"Elang", tag:"Si Dompet Tipis", initials:"YG", c1:"#33f6e0", c2:"#2a5bff",
+      stats:[["Niat Traktir",100],["Saldo Rekening",1]],
+      quote:"“Gue yang traktir deh... minggu depan pas gajian.”" },
+    { name:"Firman", tag:"Si Paling Story WA", initials:"NY", c1:"#ff4fc3", c2:"#33f6e0",
+      stats:[["Frekuensi Story",92],["Ingatan Isi Story Sendiri",6]],
+      quote:"“Lah tadi aku posting apaan ya, udah auto lupa.”" },
+    { name:"Akbar", tag:"Si Tukang PHP", initials:"AD", c1:"#2a5bff", c2:"#c8ff4d",
+      stats:[["Tingkat PHP",90],["Ketepatan Janji",7]],
+      quote:"“Otw katanya... taunya masih meringkuk di kasur.”" },
+    { name:"Dika", tag:"Si Rekomendasi Healing", initials:"WN", c1:"#c8ff4d", c2:"#ff4fc3",
+      stats:[["Ajakan Healing",96],["Progress Kerjaan",15]],
+      quote:"“Healing dulu yuk, kerjaan mah bisa nyusul kok.”" },
+    { name:"Tommy", tag:"Si Overthinking Grup", initials:"TM", c1:"#33f6e0", c2:"#ff4fc3",
+      stats:[["Durasi Mikir 1 Chat",85],["Chat Terkirim",1]],
+      quote:"“Kalo aku kirim gini, kesannya gimana ya? Hapus dulu deh.”" },
+    { name:"Fadel", tag:"Si Ratu Diskon", initials:"SR", c1:"#ff4fc3", c2:"#2a5bff",
+      stats:[["Insting Diskon",93],["Kesabaran Checkout",20]],
+      quote:"“Jangan checkout dulu, tunggu gajian ketemu promo!”" },
+  ];
+
+  const grid = document.getElementById('memberGrid');
+  members.forEach((m, i) => {
+    const card = document.createElement('div');
+    card.className = 'm-card';
+    card.style.setProperty('--m-color', m.c2);
+    card.style.setProperty('--m-color1', m.c1);
+    card.style.setProperty('--m-color2', m.c2);
+
+    const statsHTML = m.stats.map(([label, val]) => `
+      <div>
+        <div class="m-stat-row"><span>${label}</span><span>${val}%</span></div>
+        <div class="m-bar"><div class="m-bar-fill" style="width:${val}%"></div></div>
+      </div>
+    `).join('');
+
+    card.innerHTML = `
+      <div class="m-top">
+        <div class="m-avatar">${m.initials.slice(0,2)}</div>
+        <div>
+          <div class="m-name">${m.name}</div>
+          <div class="m-tag">${m.tag}</div>
+        </div>
+      </div>
+      <div class="m-stats">${statsHTML}</div>
+      <button class="m-quote-btn" type="button" aria-expanded="false">Kutipan Khas</button>
+      <div class="m-quote">${m.quote}</div>
+    `;
+
+    const btn = card.querySelector('.m-quote-btn');
+    const q = card.querySelector('.m-quote');
+    btn.addEventListener('click', () => {
+      const open = q.classList.toggle('open');
+      btn.setAttribute('aria-expanded', String(open));
+      btn.textContent = open ? 'Sembunyikan' : 'Kutipan Khas';
+    });
+
+    grid.appendChild(card);
+  });
+
+  /* ============ SPIN THE WHEEL ============ */
+  const canvas = document.getElementById('wheelCanvas');
+  const ctx = canvas.getContext('2d');
+  const size = canvas.width;
+  const cx = size/2, cy = size/2, radius = size/2 - 10;
+  const segColors = ["#2a5bff","#33f6e0","#ff4fc3","#c8ff4d"];
+  const names = members.map(m => m.name);
+  const segAngle = (Math.PI*2) / names.length;
+  let currentRotation = 0;
+
+  function drawWheel(rotation){
+    ctx.clearRect(0,0,size,size);
+    ctx.save();
+    ctx.translate(cx,cy);
+    ctx.rotate(rotation);
+    names.forEach((name, i) => {
+      const start = i * segAngle;
+      const end = start + segAngle;
+      ctx.beginPath();
+      ctx.moveTo(0,0);
+      ctx.arc(0,0,radius,start,end);
+      ctx.closePath();
+      ctx.fillStyle = segColors[i % segColors.length];
+      ctx.globalAlpha = 0.92;
+      ctx.fill();
+      ctx.globalAlpha = 1;
+      ctx.strokeStyle = "rgba(5,9,20,0.55)";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      ctx.save();
+      ctx.rotate(start + segAngle/2);
+      ctx.textAlign = "right";
+      ctx.fillStyle = "#04101f";
+      ctx.font = "700 22px 'Space Grotesk', sans-serif";
+      ctx.fillText(name, radius - 24, 8);
+      ctx.restore();
+    });
+    ctx.restore();
+  }
+
+  drawWheel(0);
+
+  const spinBtn = document.getElementById('spinBtn');
+  const resultEl = document.getElementById('wheelResult');
+  let spinning = false;
+
+  function easeOutCubic(t){ return 1 - Math.pow(1-t, 3); }
+
+  spinBtn.addEventListener('click', () => {
+    if (spinning) return;
+    spinning = true;
+    spinBtn.disabled = true;
+    resultEl.textContent = "Rodanya lagi mikir...";
+
+    const extraSpins = 5 + Math.random()*2;
+    const randomStop = Math.random() * Math.PI * 2;
+    const targetRotation = currentRotation + extraSpins*Math.PI*2 + randomStop;
+    const duration = 4200;
+    const start = performance.now();
+    const startRotation = currentRotation;
+
+    function frame(now){
+      const t = Math.min(1, (now-start)/duration);
+      const eased = easeOutCubic(t);
+      currentRotation = startRotation + (targetRotation-startRotation)*eased;
+      drawWheel(currentRotation);
+      if (t < 1){
+        requestAnimationFrame(frame);
+      } else {
+        spinning = false;
+        spinBtn.disabled = false;
+        // pointer is at top (12 o'clock = -90deg / -PI/2 from 0deg baseline)
+        const normalized = ((currentRotation % (Math.PI*2)) + Math.PI*2) % (Math.PI*2);
+        const pointerAngle = ( (Math.PI*2) - normalized + (Math.PI*1.5) ) % (Math.PI*2);
+        const idx = Math.floor(pointerAngle / segAngle) % names.length;
+        resultEl.textContent = "Kena giliran: " + names[idx] + " 🎯";
+        showToast(names[idx] + " resmi kena apes hari ini!");
+      }
+    }
+    requestAnimationFrame(frame);
+  });
+
+  /* ============ HALL OF SHAME GALLERY ============ */
+  const galleryData = [
+    { cat:"pasrah", label:"Foto Muka Pasrah", emoji:"😩", cap:"Ekspresi Yoga pas diminta traktir duluan.", grad:"linear-gradient(135deg,#1a2a63,#0c1533)" },
+    { cat:"chat", label:"Chat Random", emoji:"💬", cap:"Grup rame jam 2 pagi bahas mie ayam terenak sejagat.", grad:"linear-gradient(135deg,#2a1a4d,#0c1533)" },
+    { cat:"karet", label:"Momen Jam Karet", emoji:"⏰", cap:"Dinda bilang 'otw' 40 menit sebelum janjian dimulai.", grad:"linear-gradient(135deg,#3d1a33,#0c1533)" },
+    { cat:"indah", label:"Kenangan Indah", emoji:"🌅", cap:"Nonton sunrise bareng padahal niatnya begadang doang.", grad:"linear-gradient(135deg,#173a3a,#0c1533)" },
+    { cat:"pasrah", label:"Foto Muka Pasrah", emoji:"🫠", cap:"Tommy nunggu 15 menit buat kirim satu chat doang.", grad:"linear-gradient(135deg,#1a2a63,#0c1533)" },
+    { cat:"chat", label:"Chat Random", emoji:"📸", cap:"Screenshot story Firman yang keempatpuluh hari ini.", grad:"linear-gradient(135deg,#2a1a4d,#0c1533)" },
+    { cat:"karet", label:"Momen Jam Karet", emoji:"🐌", cap:"Aldi masih di kasur padahal katanya udah di jalan.", grad:"linear-gradient(135deg,#3d1a33,#0c1533)" },
+    { cat:"indah", label:"Kenangan Indah", emoji:"🎂", cap:"Ulang tahun pertama geng ini resmi kebentuk, 2016.", grad:"linear-gradient(135deg,#173a3a,#0c1533)" },
+    { cat:"pasrah", label:"Foto Muka Pasrah", emoji:"😶", cap:"Reaksi semua orang pas Fitri mulai 'manas-manasin'.", grad:"linear-gradient(135deg,#1a2a63,#0c1533)" },
+    { cat:"chat", label:"Chat Random", emoji:"🛍️", cap:"Sarah kirim 12 link diskon dalam satu menit.", grad:"linear-gradient(135deg,#2a1a4d,#0c1533)" },
+    { cat:"karet", label:"Momen Jam Karet", emoji:"🚗", cap:"Janjian jam 7, kumpul lengkap jam 9 lewat.", grad:"linear-gradient(135deg,#3d1a33,#0c1533)" },
+    { cat:"indah", label:"Kenangan Indah", emoji:"🏕️", cap:"Camping pertama, tenda ambruk, tetep dibilang seru.", grad:"linear-gradient(135deg,#173a3a,#0c1533)" }
+  ];
+
+  const galleryGrid = document.getElementById('galleryGrid');
+  galleryData.forEach(g => {
+    const card = document.createElement('div');
+    card.className = 'g-card';
+    card.dataset.cat = g.cat;
+    card.innerHTML = `
+      <div class="g-thumb" style="--g-grad:${g.grad}">${g.emoji}</div>
+      <div class="g-body">
+        <div class="g-cat">${g.label}</div>
+        <div class="g-cap">${g.cap}</div>
+      </div>
+    `;
+    galleryGrid.appendChild(card);
+  });
+
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      document.querySelectorAll('.g-card').forEach(card => {
+        card.classList.toggle('hide', f !== 'all' && card.dataset.cat !== f);
+      });
+    });
+  });
+
+  /* ============ SOUNDBOARD ============ */
+  const soundLines = [
+    { who:"Iyan", line:"Nanti kita rapatin di WAG ya!", c:"#33f6e0" },
+    { who:"Elang", line:"Otw, lima menit lagi sampai!", c:"#ff4fc3" },
+    { who:"Rizky", line:"Eh kebetulan banget kita online bareng.", c:"#c8ff4d" },
+    { who:"Firman", line:"Coba deh bilangin dia, biar rame!", c:"#ff4fc3" },
+    { who:"Akbar", line:"Gue traktir, minggu depan ya!", c:"#33f6e0" },
+    { who:"Fadil", line:"Udah aku story-in, lupa isinya apa.", c:"#c8ff4d" },
+    { who:"Dika", line:"Otw katanya, masih di kasur aslinya.", c:"#2a5bff" },
+    { who:"Tommy", line:"Healing dulu yuk, kerjaan nyusul!", c:"#c8ff4d" },
+    { who:"", line:"Ini kalau aku kirim gini kesannya gimana ya?", c:"#33f6e0" },
+    { who:"Sarah", line:"Jangan checkout dulu, tunggu promo!", c:"#ff4fc3" },
+    { who:"Reza", line:"Julid boleh, tetep gue yang bayarin.", c:"#c8ff4d" },
+    { who:"Semua", line:"Woy jangan telat lagi woy!", c:"#2a5bff" }
+  ];
+
+  const soundGrid = document.getElementById('soundGrid');
+  soundLines.forEach(s => {
+    const btn = document.createElement('button');
+    btn.className = 'sb-btn';
+    btn.type = 'button';
+    btn.style.setProperty('--m-color', s.c);
+    btn.innerHTML = `
+      <div class="sb-wave"><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="sb-line">"${s.line}"</div>
+      <div class="sb-who">— ${s.who}</div>
+    `;
+    btn.addEventListener('click', () => playLine(btn, s.line));
+    soundGrid.appendChild(btn);
+  });
+
+  function playLine(btn, text){
+    document.querySelectorAll('.sb-btn.playing').forEach(b => b.classList.remove('playing'));
+    btn.classList.add('playing');
+    try{
+      if ('speechSynthesis' in window){
+        window.speechSynthesis.cancel();
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.lang = 'id-ID';
+        utter.rate = 1;
+        utter.onend = () => btn.classList.remove('playing');
+        utter.onerror = () => btn.classList.remove('playing');
+        window.speechSynthesis.speak(utter);
+      } else {
+        setTimeout(() => btn.classList.remove('playing'), 1200);
+      }
+    } catch(e){
+      setTimeout(() => btn.classList.remove('playing'), 1200);
+    }
+  }
+
+  /* ============ TIMELINE ============ */
+  const timelineData = [
+    { year:"2016", title:"Grup Kelas yang Nggak Pernah Dibubarin", desc:"Awalnya cuma grup tugas kelompok, isinya spam 'udah dikerjain belum' doang." },
+    { year:"2017", title:"Nongkrong Pertama di Luar Kelas", desc:"Janjian jam 4, kumpul jam 6, tapi jadi awal dari segalanya." },
+    { year:"2019", title:"Nama 'Sumsang' Resmi Lahir", desc:"Muncul dari candaan random pas ngebahas HP baru salah satu anggota." },
+    { year:"2021", title:"Camping Pertama, Tenda Ambruk", desc:"Hujan deras, tenda roboh, tetep jadi salah satu kenangan paling ikonik." },
+    { year:"2023", title:"Julukan-julukan Resmi Ditetapkan", desc:"Si Tukang Wacana, Si Jam Karet, dan gelar-gelar abadi lainnya lahir di sini." },
+    { year:"2026", title:"Website Sumsang Resmi Meluncur", desc:"Karena grup WA aja rasanya kurang canggih buat geng se-random ini." }
+  ];
+
+  const timelineEl = document.getElementById('timelineList');
+  timelineData.forEach(t => {
+    const item = document.createElement('div');
+    item.className = 't-item';
+    item.innerHTML = `
+      <div class="t-dot"></div>
+      <div class="t-year">${t.year}</div>
+      <div class="t-title">${t.title}</div>
+      <div class="t-desc">${t.desc}</div>
+    `;
+    timelineEl.appendChild(item);
+  });
+
+  /* ============ TOAST ============ */
+  let toastTimer;
+  function showToast(msg){
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 2600);
+  }
+
+})();
+</script>
+</body>
+</html>
